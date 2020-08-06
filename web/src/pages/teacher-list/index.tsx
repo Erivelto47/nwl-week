@@ -26,13 +26,12 @@ function TeacherList () {
             label="Dia da Semana"
             name="week_day"
             options={[
-              {value: '0', label: 'Segunda-feira'},
-              {value: '1', label: 'Terca-feira'},
-              {value: '2', label: 'Quarta-feira'},
-              {value: '3', label: 'Quinta-feira'},
-              {value: '4', label: 'Sexta-feira'}
+              {value: '1', label: 'Segunda-feira'},
+              {value: '2', label: 'Terca-feira'},
+              {value: '3', label: 'Quarta-feira'},
+              {value: '4', label: 'Quinta-feira'},
+              {value: '5', label: 'Sexta-feira'}
             ]}/>
-          <Input label="Dia da seman" name="day-week"/>
           <Input label="Hora" name="hour" type="time"/>
         </form>
       </PageHeader>
