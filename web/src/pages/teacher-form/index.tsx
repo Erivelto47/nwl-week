@@ -14,7 +14,6 @@ import './style.css'
 function TeacherForm () {
   const history = useHistory();
 
-  //Form
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -49,7 +48,6 @@ function TeacherForm () {
       alert('Cadastro realizado com sucesso!');
       history.push('/');
     }).catch(() => alert('erro no cadastro'))
-
   }
 
   function setScheduleItemValue (position: number, field: string, value: string) {
