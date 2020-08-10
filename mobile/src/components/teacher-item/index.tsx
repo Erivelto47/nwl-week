@@ -7,7 +7,7 @@ import heartOutlineIcon from '../../assets/images/icons/heart-outline.png';
 import unfavoriteIcon from '../../assets/images/icons/unfavorite.png';
 import whatsappIcon from '../../assets/images/icons/whatsapp.png';
 
-import {isFavourite, removeFavourite, addFavourite} from "../../services/favoriteService";
+import {removeFavourite, addFavourite, isFavourite} from "../../services/favoriteService";
 import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 
 import api from "../../services/api";
@@ -37,10 +37,10 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher}) => {
     api.post('connections', {
       user_id: teacher.id
     })
-    handlleLinkToWhatsapp();
+    handleLinkToWhatsapp();
   }
 
-  function handlleLinkToWhatsapp() {
+  function handleLinkToWhatsapp() {
     Linking.openURL(`whatsapp://send?phone=${teacher.whatsapp}`)
   }
 
@@ -81,9 +81,9 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher}) => {
               onPress={handleToggleFavorite}
               style={[
               styles.favoriteButton,
-                favorites.includes(teacher) ? styles.favorited : {}
+                (favorites.includes(teacher)) ? styles.favorited : {}
               ]}>
-              { favorites.includes(teacher)
+              { (favorites.includes(teacher))
                 ? <Image source={unfavoriteIcon}/>
                 : <Image source={heartOutlineIcon}/>
               }

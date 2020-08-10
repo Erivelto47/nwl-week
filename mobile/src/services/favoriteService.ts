@@ -11,9 +11,9 @@ export function getFavourites() {
         arrayFavourites.push(teacher);
       });
     }
-  })
+  });
 
-  return arrayFavourites;
+  return arrayFavourites
 }
 
 export function addFavourite(teacher: Teacher) {
@@ -30,7 +30,7 @@ export function removeFavourite(teacher: Teacher) {
   }
 }
 
-export function isFavourite(teacher: Teacher): boolean {
+export async function isFavourite(teacher: Teacher): Promise<boolean> {
   return getFavourites().includes(teacher);
 }
 

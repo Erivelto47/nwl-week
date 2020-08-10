@@ -15,8 +15,7 @@ import styles from "./styles";
 
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
-
-  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data)
+  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
 
   const [weekday, setWeekDay] = useState('1');
   const [time, setTime] = useState('8:00');
@@ -25,6 +24,11 @@ const TeacherList = () => {
   const [showTimePicker, setShowTimePicker] = useState(true);
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [isLoadingTeacherList, setIsLoadinTeacherList] = useState(false);
+
+  useEffect(() => {
+    setShowTimePicker(false);
+  }, [showTimePicker])
+
 
   function handleToggleTimePicker() {
     setShowTimePicker(!showTimePicker);
@@ -51,6 +55,7 @@ const TeacherList = () => {
 
   async function handleFilterSubmit() {
     setIsLoadinTeacherList(true);
+
     await api.get('classes', {
       params: {
         subject,
@@ -60,16 +65,12 @@ const TeacherList = () => {
     }).then(result => {
       setTeachers(result.data);
       setIsFiltersVisible(false);
-      setIsLoadinTeacherList(false);
     }).catch(() => {
-      setIsLoadinTeacherList(false);
       setIsFiltersVisible(true);
     });
-  }
 
-  useEffect(() => {
-    setShowTimePicker(false)
-  }, [showTimePicker])
+    setIsLoadinTeacherList(false);
+  }
 
   return (
     <View style={styles.container}>
