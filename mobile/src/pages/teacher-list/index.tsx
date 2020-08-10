@@ -175,7 +175,6 @@ const TeacherList = () => {
               <TeacherItem
                 key={teacher.id}
                 teacher={teacher}
-                favorited={favorites.includes(teacher)}
               />)
           })}
         </ScrollView>

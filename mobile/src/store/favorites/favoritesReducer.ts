@@ -1,9 +1,9 @@
 import {Teacher} from "../../components/teacher-item";
 import {FavoriteActions} from "./favoriteActions";
-import {getFavorites} from "../../services/favoriteService";
+import {getFavourites} from "../../services/favoriteService";
 
 const INITIAL_STATE = {
-  data: getFavorites()
+  data: getFavourites()
 }
 
 interface FavoritesReducer {
@@ -17,15 +17,9 @@ export interface FavoritesReducerState {
 export function favorites(state: FavoritesReducer = INITIAL_STATE, action: FavoriteActions) {
   switch (action.type) {
     case 'ADD_FAVORITE':
-      const newState = {...state, data: [...state.data, action.payload]}
-      console.log('ADDIN: ');
-      console.log(newState.data)
-      return newState;
+      return {...state, data: [...state.data, action.payload]} ;
     case 'REMOVE_FAVORITE':
-      const newStateRe = { data: [...state.data.filter(teacher => teacher !== action.payload)]}
-      console.log('REMOVE: ');
-      console.log(newStateRe.data)
-      return newStateRe;
+      return { data: [...state.data.filter(teacher => teacher !== action.payload)]};
     default:
       return state
   }

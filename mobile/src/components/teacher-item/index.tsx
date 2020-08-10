@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {View, Image, Text, Linking} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
-import {useDispatch, createDispatchHook, useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
 import heartOutlineIcon from '../../assets/images/icons/heart-outline.png';
 import unfavoriteIcon from '../../assets/images/icons/unfavorite.png';
 import whatsappIcon from '../../assets/images/icons/whatsapp.png';
 
-import favoriteActions from "../../store/favorites/favoriteActions";
+import {isFavourite, removeFavourite, addFavourite} from "../../services/favoriteService";
+import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
+
 import api from "../../services/api";
 import styles from "./styles";
-import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
+import favoriteActions from "../../store/favorites/favoriteActions";
 
 export interface Teacher {
   id: number;
@@ -25,12 +26,11 @@ export interface Teacher {
 
 interface TeacherItemProps {
   teacher: Teacher;
-  favorited: boolean;
 }
 
-const TeacherItem: React.FC<TeacherItemProps> = ({teacher, favorited}) => {
-  const [isFavorited, setIsFavorited] = useState(favorited);
+const TeacherItem: React.FC<TeacherItemProps> = ({teacher}) => {
   const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
+
   const dispatch = useDispatch();
 
   function createNewConnection() {
@@ -45,29 +45,14 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher, favorited}) => {
   }
 
   async function handleToggleFavorite() {
-    const favorites = await AsyncStorage.getItem('favorites');
-    let favoritesArray = [];
 
-    if(favorites) {
-      favoritesArray = JSON.parse(favorites);
-    }
-
-    if(isFavorited) {
-      const favoritesIndex = favoritesArray.findIndex((teacherItem: Teacher) => {
-        return teacherItem.id === teacher.id;
-      })
-
-      favoritesArray.splice(favoritesIndex, 1);
+    if(favorites.includes(teacher)){
+      removeFavourite(teacher)
       dispatch(favoriteActions.removeFavorite(teacher));
-      setIsFavorited(false);
     } else {
-
-
-      favoritesArray.push(teacher);
+      addFavourite(teacher)
       dispatch(favoriteActions.addFavorite(teacher));
-      setIsFavorited(true);
     }
-    await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
   }
 
   return (
@@ -96,9 +81,9 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher, favorited}) => {
               onPress={handleToggleFavorite}
               style={[
               styles.favoriteButton,
-              isFavorited ? styles.favorited : {}
+                favorites.includes(teacher) ? styles.favorited : {}
               ]}>
-              { isFavorited
+              { favorites.includes(teacher)
                 ? <Image source={unfavoriteIcon}/>
                 : <Image source={heartOutlineIcon}/>
               }

@@ -11,8 +11,6 @@ import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 const Favorites = () => {
   const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
 
-  console.log('Favoritos: ')
-  console.log(favorites)
   return (
     <View style={styles.container}>
       <PageHeader title="Meus proffys Favoritos"/>
@@ -28,7 +26,6 @@ const Favorites = () => {
             <TeacherItem
               key={teacher.id}
               teacher={teacher}
-              favorited={true}
             />)
         })}
 
