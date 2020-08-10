@@ -1,30 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {View, ScrollView} from "react-native";
+import {useSelector} from "react-redux";
 
-import styles from "./styles";
 import PageHeader from "../../components/page-header";
 import TeacherItem, {Teacher} from "../../components/teacher-item";
-import AsyncStorage from "@react-native-community/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 
-function Favorites() {
-  const [favorites, setFavorites] = useState([]);
+import styles from "./styles";
+import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 
-  useFocusEffect(() => {
-    loadFavorites();
-  })
+const Favorites = () => {
+  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
 
-  function loadFavorites() {
-    AsyncStorage.getItem('favorites').then(response => {
-      if(response) {
-        setFavorites(JSON.parse(response));
-      }
-    })
-  }
+  console.log('Favoritos: ')
+  console.log(favorites)
   return (
     <View style={styles.container}>
       <PageHeader title="Meus proffys Favoritos"/>
-
       <ScrollView
         style={styles.teacherList}
         contentContainerStyle={{

@@ -1,21 +1,22 @@
 import React, {useState, useEffect} from "react";
+import {useSelector} from 'react-redux';
 import {View, ScrollView, Text, ActivityIndicator} from "react-native";
-import {Feather} from '@expo/vector-icons'
-import {useFocusEffect} from "@react-navigation/native";
 import {BorderlessButton, RectButton} from "react-native-gesture-handler";
 import {Picker} from '@react-native-community/picker';
-import AsyncStorage from '@react-native-community/async-storage'
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {Feather} from '@expo/vector-icons'
 
 import PageHeader from "../../components/page-header";
 import TeacherItem, {Teacher} from "../../components/teacher-item";
 
+import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 import api from "../../services/api";
 import styles from "./styles";
 
-function TeacherList() {
+const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
-  const [favorites, setFavorites] = useState<number[]>([]);
+
+  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data)
 
   const [weekday, setWeekDay] = useState('1');
   const [time, setTime] = useState('8:00');
@@ -24,18 +25,6 @@ function TeacherList() {
   const [showTimePicker, setShowTimePicker] = useState(true);
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
   const [isLoadingTeacherList, setIsLoadinTeacherList] = useState(false);
-
-  function loadFavorites() {
-    AsyncStorage.getItem('favorites').then(response => {
-      if (response) {
-        const favoritedTeachersIds = JSON.parse(response)
-          .map((teacher: Teacher) => {
-            return teacher.id;
-          })
-        setFavorites(favoritedTeachersIds);
-      }
-    })
-  }
 
   function handleToggleTimePicker() {
     setShowTimePicker(!showTimePicker);
@@ -49,14 +38,10 @@ function TeacherList() {
   }
 
   function onChangeWeekday(weekday: string) {
-    console.log(weekday)
-    console.log(subject)
     setWeekDay(weekday)
   }
 
   function onChangeSubject(subject: string) {
-    console.log(subject)
-    console.log(weekday)
     setSubject(subject)
   }
 
@@ -65,7 +50,6 @@ function TeacherList() {
   }
 
   async function handleFilterSubmit() {
-    loadFavorites();
     setIsLoadinTeacherList(true);
     await api.get('classes', {
       params: {
@@ -77,7 +61,7 @@ function TeacherList() {
       setTeachers(result.data);
       setIsFiltersVisible(false);
       setIsLoadinTeacherList(false);
-    }).catch(onerror => {
+    }).catch(() => {
       setIsLoadinTeacherList(false);
       setIsFiltersVisible(true);
     });
@@ -86,10 +70,6 @@ function TeacherList() {
   useEffect(() => {
     setShowTimePicker(false)
   }, [showTimePicker])
-
-  useFocusEffect(() => {
-    loadFavorites();
-  })
 
   return (
     <View style={styles.container}>
@@ -195,7 +175,7 @@ function TeacherList() {
               <TeacherItem
                 key={teacher.id}
                 teacher={teacher}
-                favorited={favorites.includes(teacher.id)}
+                favorited={favorites.includes(teacher)}
               />)
           })}
         </ScrollView>

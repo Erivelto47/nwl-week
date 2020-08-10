@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Image, Text, Linking} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useDispatch, createDispatchHook, useSelector} from "react-redux";
 
 import heartOutlineIcon from '../../assets/images/icons/heart-outline.png';
 import unfavoriteIcon from '../../assets/images/icons/unfavorite.png';
 import whatsappIcon from '../../assets/images/icons/whatsapp.png';
 
+import favoriteActions from "../../store/favorites/favoriteActions";
 import api from "../../services/api";
 import styles from "./styles";
-
+import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 
 export interface Teacher {
   id: number;
@@ -28,6 +30,8 @@ interface TeacherItemProps {
 
 const TeacherItem: React.FC<TeacherItemProps> = ({teacher, favorited}) => {
   const [isFavorited, setIsFavorited] = useState(favorited);
+  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
+  const dispatch = useDispatch();
 
   function createNewConnection() {
     api.post('connections', {
@@ -54,9 +58,13 @@ const TeacherItem: React.FC<TeacherItemProps> = ({teacher, favorited}) => {
       })
 
       favoritesArray.splice(favoritesIndex, 1);
+      dispatch(favoriteActions.removeFavorite(teacher));
       setIsFavorited(false);
     } else {
+
+
       favoritesArray.push(teacher);
+      dispatch(favoriteActions.addFavorite(teacher));
       setIsFavorited(true);
     }
     await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
