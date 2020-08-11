@@ -1,48 +1,19 @@
 import { StyleSheet } from "react-native";
+import general from "../../assets/styles/general";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#8257E5',
-    justifyContent: 'center',
-    padding: 40
-  },
 
-  content: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  title: {
-    fontFamily: 'Archivo_700Bold',
-    color: '#FFF',
-    fontSize: 32,
-    lineHeight: 37,
-    maxWidth: 220,
-  },
+  content: general.contentLanding,
 
-  description: {
-    marginTop: 24,
-    color: '#d4c2ff',
-    fontSize: 16,
-    lineHeight: 26,
-    fontFamily: 'Poppins_400Regular',
-    maxWidth: 240,
-  },
+  container: general.containerLanding,
 
-  okButton: {
-    marginVertical: 40,
-    backgroundColor: '#04d361',
-    height: 58,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8
-  },
+  title: general.titleLanding,
 
-  okButtonText: {
-    color: '#FFF',
-    fontSize: 16,
-    fontFamily: 'Archivo_400Regular'
-  }
+  description: general.descriptionLanding,
+
+  okButton: general.okButtonLanding,
+
+  okButtonText: general.okButtonTextLanding
 })
 
 export default styles;
