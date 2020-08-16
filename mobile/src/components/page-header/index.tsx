@@ -34,7 +34,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({...rest}) => {
         {rest.headerRight}
       </View>
 
-
       {rest.children}
     </View>
   )

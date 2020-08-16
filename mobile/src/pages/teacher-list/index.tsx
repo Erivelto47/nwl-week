@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {useSelector} from 'react-redux';
 import {View, ScrollView, Text, ActivityIndicator} from "react-native";
 import {BorderlessButton, RectButton} from "react-native-gesture-handler";
 import {Picker} from '@react-native-community/picker';
@@ -8,14 +7,11 @@ import {Feather} from '@expo/vector-icons'
 
 import PageHeader from "../../components/page-header";
 import TeacherItem, {Teacher} from "../../components/teacher-item";
-
-import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 import api from "../../services/api";
 import styles from "./styles";
 
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
-  const favorites = useSelector((state: FavoritesReducerState) => state.favorites.data);
 
   const [weekday, setWeekDay] = useState('1');
   const [time, setTime] = useState('8:00');
@@ -150,8 +146,6 @@ const TeacherList = () => {
                   />
                 )}
               </View>
-
-
             </View>
             <RectButton style={styles.submitButton} onPress={handleFilterSubmit}>
               <Text style={styles.submitButtonText}>

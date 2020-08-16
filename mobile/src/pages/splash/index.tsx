@@ -8,12 +8,8 @@ import styles from "./styles";
 
 function Splash() {
 
-  function onTouch() {
-    console.log('touch')
-  }
-
   return (
-    <View style={styles.container} onTouchStart={onTouch}>
+    <View style={styles.container}>
       <ImageBackground
         resizeMode={"contain"}
         source={bgImg }

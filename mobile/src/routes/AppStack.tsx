@@ -4,21 +4,29 @@ import {createStackNavigator} from "@react-navigation/stack";
 
 import Landing from "../pages/landing";
 import GiveClasses from "../pages/give-classes";
+import {Provider} from "react-redux";
+
 import StudyTabs from "./StudyTabs";
-import Splash from "../pages/splash";
+import SplashTabs from "./SplashTabs";
+
+import store from "../store/store";
+import Login from "../pages/login";
 
 const {Navigator, Screen} = createStackNavigator();
 
 function AppStack() {
   return (
+    <Provider store={store}>
       <NavigationContainer>
         <Navigator screenOptions={{headerShown: false}}>
-          <Screen name="Splash" component={Splash}/>
+          <Screen name="Splash" component={SplashTabs} />
           <Screen name="Landing" component={Landing}/>
           <Screen name="GiveClasses" component={GiveClasses}/>
-          <Screen name="Study" component={StudyTabs} />
+          <Screen name="Login" component={Login}/>
+          <Screen name="Study" component={StudyTabs}/>
         </Navigator>
       </NavigationContainer>
+    </Provider>
   )
 }
 
