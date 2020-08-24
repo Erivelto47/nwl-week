@@ -1,21 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Formik} from 'formik';
 import {Feather} from '@expo/vector-icons'
 import {View, TextInput, Text} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {BorderlessButton} from "react-native-gesture-handler";
 
-import styles from "./styles";
+import {login, getUserCredentials} from '../../services/UserService'
+
+import {UserSession} from "../../models/UserSession";
 import colorsDefault from "../../assets/styles/color";
 
+import styles from "./styles";
+import {useNavigation} from "@react-navigation/native";
+
 function LoginForm() {
-  const [isHidePassword, setIsHidePassword] = useState(true)
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  const [isHidePassword, setIsHidePassword] = useState(true);
+  const [isRemeber, setIsRemember] = useState(false);
+
+  const navigate = useNavigation();
+
+  let initialValues: UserSession = {
+    email: '',
+    password: '',
+    rememberMe: false
+  }
+
+  useEffect(() => {
+    getUserCredentials()
+      .then(value => {
+      initialValues.email = value.email;
+      initialValues.password = value.password;
+      initialValues.rememberMe = value.rememberMe;
+    });
+  })
 
   return (
     <Formik
-      initialValues={{email: '', password: ''}}
-      onSubmit={values => console.log(values)}
+      initialValues={initialValues}
+      onSubmit={values => {
+        values.rememberMe = isRemeber;
+        login(values).catch(() => navigate.navigate('Landing'));
+      }}
     >
       {({handleChange, handleBlur, handleSubmit, values}) => (
 
@@ -33,7 +58,9 @@ function LoginForm() {
               textContentType="emailAddress"
               style={styles.input}
               onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
+              onBlur={() => {
+                handleBlur('email');
+              }}
               value={values.email}
             />
             <View style={styles.inputPasswordGroup}>
@@ -47,20 +74,20 @@ function LoginForm() {
                 onBlur={handleBlur('password')}
                 value={values.password}
               />
-              {isHidePassword &&
+              {!isHidePassword &&
               <Feather style={styles.inputPasswordHide} name="eye" size={20} color="#000"
                        onPress={() => setIsHidePassword(!isHidePassword)}/>}
-              {!isHidePassword &&
+              {isHidePassword &&
               <Feather style={styles.inputPasswordHide} name="eye-off" size={20} color="#000"
                        onPress={() => setIsHidePassword(!isHidePassword)}/>}
             </View>
             <View style={styles.formFooter}>
               <View style={styles.checkboxGroup}>
                 <CheckBox
-                  tintColors={{ true: colorsDefault.colorSecundary, false: colorsDefault.colorTextComplement }}
+                  tintColors={{true: colorsDefault.colorSecundary, false: colorsDefault.colorTextComplement}}
                   disabled={false}
-                  value={toggleCheckBox}
-                  onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
+                  value={values.rememberMe}
+                  onValueChange={(newValue: boolean) => setIsRemember(newValue)}
                 />
                 <Text style={styles.formFooterRememberText}>Lembrar-me</Text>
               </View>

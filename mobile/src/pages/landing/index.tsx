@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Image, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import {RectButton} from 'react-native-gesture-handler'
+import {Ionicons} from "@expo/vector-icons";
 
 import landingImg from '../../assets/images/landing.png';
 import hearIcon from '../../assets/images/icons/heart.png';
 
 import api from "../../services/api";
 import styles from "./styles";
-import {Ionicons} from "@expo/vector-icons";
 
 function Landing() {
   const navigation = useNavigation();

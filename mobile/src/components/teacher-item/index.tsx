@@ -7,25 +7,16 @@ import heartOutlineIcon from '../../assets/images/icons/heart-outline.png';
 import unfavoriteIcon from '../../assets/images/icons/unfavorite.png';
 import whatsappIcon from '../../assets/images/icons/whatsapp.png';
 
-import {removeFavourite, addFavourite, isFavourite} from "../../services/favoriteService";
+import {removeFavourite, addFavourite, isFavourite} from "../../services/FavoriteService";
 import {FavoritesReducerState} from "../../store/favorites/favoritesReducer";
 
 import api from "../../services/api";
 import styles from "./styles";
 import favoriteActions from "../../store/favorites/favoriteActions";
-
-export interface Teacher {
-  id: number;
-  avatar: string;
-  bio: string;
-  cost: number;
-  name: string;
-  subject: string;
-  whatsapp: string;
-}
+import {User} from "../../models/User";
 
 interface TeacherItemProps {
-  teacher: Teacher;
+  teacher: User;
 }
 
 const TeacherItem: React.FC<TeacherItemProps> = ({teacher}) => {

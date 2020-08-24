@@ -1,13 +1,13 @@
-import {Teacher} from "../components/teacher-item";
 import AsyncStorage from "@react-native-community/async-storage";
+import {User} from "../models/User";
 
 export function getFavourites() {
   const favorites = AsyncStorage.getItem('favorites');
-  const arrayFavourites: Teacher[] = [];
+  const arrayFavourites: User[] = [];
 
   favorites.then(teachers => {
     if(teachers) {
-      JSON.parse(teachers).map((teacher:Teacher) => {
+      JSON.parse(teachers).map((teacher:User) => {
         arrayFavourites.push(teacher);
       });
     }
@@ -16,31 +16,31 @@ export function getFavourites() {
   return arrayFavourites
 }
 
-export function addFavourite(teacher: Teacher) {
+export function addFavourite(teacher: User) {
 
   if(!isFavourite(teacher)) {
     setItemFavourite(teacher)
   }
 }
 
-export function removeFavourite(teacher: Teacher) {
+export function removeFavourite(teacher: User) {
 
   if(isFavourite(teacher)) {
     removeItemFavourite(teacher)
   }
 }
 
-export async function isFavourite(teacher: Teacher): Promise<boolean> {
+export async function isFavourite(teacher: User): Promise<boolean> {
   return getFavourites().includes(teacher);
 }
 
-async function setItemFavourite(teacher: Teacher) {
+async function setItemFavourite(teacher: User) {
   const favoritesArray = getFavourites();
   favoritesArray.push(teacher);
   await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
 }
 
-async function removeItemFavourite(teacher: Teacher) {
+async function removeItemFavourite(teacher: User) {
   const favoritesArray = getFavourites();
   const newArray = favoritesArray.filter(favourite => favourite !== teacher);
   await AsyncStorage.setItem('favorites', JSON.stringify(newArray));

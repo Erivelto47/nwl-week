@@ -6,9 +6,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Feather} from '@expo/vector-icons'
 
 import PageHeader from "../../components/page-header";
-import TeacherItem, {Teacher} from "../../components/teacher-item";
+import TeacherItem from "../../components/teacher-item";
 import api from "../../services/api";
 import styles from "./styles";
+import {User} from "../../models/User";
 
 const TeacherList = () => {
   const [teachers, setTeachers] = useState([]);
@@ -165,7 +166,7 @@ const TeacherList = () => {
             paddingBottom: 16
           }}
         >
-          {teachers.map((teacher: Teacher) => {
+          {teachers.map((teacher: User) => {
             return (
               <TeacherItem
                 key={teacher.id}

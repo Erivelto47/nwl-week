@@ -6,6 +6,7 @@ import {Ionicons} from "@expo/vector-icons";
 
 import bgImg from "../../../../assets/images/give-classes-background.png";
 import colorsDefault from "../../../../assets/styles/color";
+
 import styles from "./styles";
 
 function GiveClassesBoard() {

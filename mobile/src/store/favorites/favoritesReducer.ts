@@ -1,13 +1,13 @@
-import {Teacher} from "../../components/teacher-item";
 import {FavoriteActions} from "./favoriteActions";
-import {getFavourites} from "../../services/favoriteService";
+import {getFavourites} from "../../services/FavoriteService";
+import {User} from "../../models/User";
 
 const INITIAL_STATE = {
   data: getFavourites()
 }
 
 interface FavoritesReducer {
-  data: Teacher[]
+  data: User[]
 }
 
 export interface FavoritesReducerState {

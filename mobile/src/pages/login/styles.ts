@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     backgroundColor: colorsDefault.colorPrimary,
   },
 
+  contentKeyboard: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: colorsDefault.colorPrimary,
+  },
+
   backgroundContent: {
     flex: 1,
     justifyContent: 'center',
