@@ -1,10 +1,10 @@
-import Knex from 'knex'
+import Knex from "knex";
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable('classes', table => {
+  return knex.schema.createTable('user_credentials', table => {
     table.increments('id').primary();
-    table.string('subject').notNullable();
-    table.decimal('cost').notNullable();
+    table.string('email').notNullable();
+    table.string('password').notNullable();
 
     table.integer('user_id')
       .notNullable()
@@ -16,5 +16,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable('classes');
+  return knex.schema.dropTable('user_credentials');
 }

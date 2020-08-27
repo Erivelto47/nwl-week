@@ -3,7 +3,7 @@ import {UserSession} from "../models/UserSession";
 import api from "./api";
 
 /**
- * Set User Credentials if remember option is true
+ * Set user Credentials if remember option is true
  *  and call the API
  * @param userSession
  */

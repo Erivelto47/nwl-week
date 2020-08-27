@@ -39,7 +39,7 @@ function LoginForm() {
       initialValues={initialValues}
       onSubmit={values => {
         values.rememberMe = isRemeber;
-        login(values).catch(() => navigate.navigate('Landing'));
+        login(values).then(() => navigate.navigate('Landing'));
       }}
     >
       {({handleChange, handleBlur, handleSubmit, values}) => (
