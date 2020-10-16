@@ -1,11 +1,21 @@
 import React from 'react';
 
+import './styles/global.css';
+import './styles/pages/landing.css';
+
+import logoImg from './images/landing.svg'
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-       <h1>hello world</h1>
-      </header>
+    <div id="page-landing">
+        <div className="content-wrapper">
+        <img src={logoImg} alt="Happy"/>
+
+        <main>
+            <h1>Leve</h1>
+            <p>Visite</p>
+        </main>
+        </div>
     </div>
   );
 }
