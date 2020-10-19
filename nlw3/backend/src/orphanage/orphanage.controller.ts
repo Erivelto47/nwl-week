@@ -1,4 +1,27 @@
-import { Controller } from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+
+import {OrphanageService} from './orphanage.service';
+import {Orphanages} from './orphanage.entity';
+import {InsertResult} from 'typeorm';
 
 @Controller('orphanage')
-export class OrphanageController {}
+export class OrphanageController {
+
+  constructor(private orphanageService: OrphanageService) {
+  }
+
+  @Get()
+  index(): Promise<Orphanages[]> {
+    return this.orphanageService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id): Promise<Orphanages> {
+    return this.orphanageService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() orphange: Orphanages): Promise<InsertResult> {
+   return this.orphanageService.insert(orphange);
+  }
+}
