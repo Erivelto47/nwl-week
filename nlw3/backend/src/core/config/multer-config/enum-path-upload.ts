@@ -8,12 +8,13 @@ export enum EnumPathUpload {
   GENERALFILES = "./src/database/storage/files"
 }
 
-export function getEnumKey(name: string): string {
+export function getEnumKey(name: string): { error?: boolean; key?: string } {
+
   for (let enumPathUploadKey in EnumPathUpload) {
     if(enumPathUploadKey === name.toUpperCase()) {
-      return enumPathUploadKey;
+      return { key: enumPathUploadKey };
     }
   }
 
-  throw new Error("Type not found.");
+  return { error: true }
 }

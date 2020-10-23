@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpStatus, Param, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 
 import {OrphanageService} from './orphanage.service';
 import {Orphanages} from './orphanage.entity';
