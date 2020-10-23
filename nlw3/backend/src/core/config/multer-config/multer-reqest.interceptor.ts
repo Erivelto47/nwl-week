@@ -11,7 +11,7 @@ import {catchError} from 'rxjs/operators';
 import {MulterError} from 'multer';
 
 @Injectable()
-export class MulterRequisitionInterceptor implements NestInterceptor {
+export class MulterReqestInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 
     return next
