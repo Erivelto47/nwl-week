@@ -1,7 +1,7 @@
 import {MulterModuleOptions, MulterOptionsFactory} from '@nestjs/platform-express';
 import { diskStorage, MulterError } from 'multer';
 
-import {EnumPathUpload, getEnumKey} from './enum-path-upload';
+import {EnumPathUpload, getEnumKey} from '../enum/enum-path-upload';
 
 class MulterConfigService implements MulterOptionsFactory {
   createMulterOptions(): MulterModuleOptions {
